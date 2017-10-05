@@ -1,0 +1,17 @@
+.sidebar {
+	padding: 1rem !important;
+	background-color: gray;
+	display: flex;
+	flex-direction: column;
+}
+body {display:flex; overflow-x: hidden;}
+
+.row.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+}
+.row.no-gutters > [class^="col-"],
+.row.no-gutters > [class*=" col-"] {
+  padding-right: 0;
+  padding-left: 0;
+} 
