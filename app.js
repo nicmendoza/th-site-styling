@@ -14,29 +14,31 @@ function EditorModel(){
 	self.variablesSCSS = ko.observable();
 
 	self.scssVariablesGenerated = ko.pureComputed(function(){
-		//prepend this thing that's being stripped out currently
-		var staticSCSS = `
-			$bootstrap-sass-asset-helper: false !default;
-		`;
-		return staticSCSS + self.cssSettings().map(function(cssSet){
+		return self.cssSettings().map(function(cssSet){
 			return `${cssSet.sassVariableName}: ${cssSet.value()} ;`;
 		}).join('\n');
 	});
 
+	self.err = ko.observable();
+
 	ko.computed(function(variablesSCSS){
 
-		var variablesSCSS = self.scssVariablesGenerated();
+	var variablesSCSS = self.scssVariablesGenerated();
 
-		if(!variablesSCSS || !self.assetsLoaded()) return;
-
-		Sass.writeFile('bootstrap/variables',variablesSCSS, function(writeRes){
+	if(!variablesSCSS || !self.assetsLoaded()) return;
+		self.err(undefined);
+		Sass.writeFile('_custom',variablesSCSS, function(writeRes){
 			var baseScss= self.baseScss();
 			Sass.compile(baseScss,function(sassRes){
-				self.css(sassRes.text);
+				if(sassRes.message){
+					self.err(sassRes.formatted);
+				} else {
+					self.css(sassRes.text);
+				}
+				
 			});
 
 		});
-		
 
 	});
 
@@ -79,7 +81,7 @@ EditorModel.prototype.updateCSS = function(){
 	var self = this;
 
 
-}
+};
 
 EditorModel.prototype.setupStyleSheet = function(){
 
@@ -89,81 +91,92 @@ EditorModel.prototype.setupStyleSheet = function(){
 	var variablesText = '';
 
 	[
-		['bootstrap/alerts','_alerts.scss'],
-		['bootstrap/navs','_navs.scss'],
-		['bootstrap/badges','_badges.scss'],
-		['bootstrap/normalize','_normalize.scss'],
-		['bootstrap/breadcrumbs','_breadcrumbs.scss'],
-		['bootstrap/pager','_pager.scss'],
-		['bootstrap/button-groups','_button-groups.scss'],
-		['bootstrap/pagination','_pagination.scss'],
-		['bootstrap/buttons','_buttons.scss'],
-		['bootstrap/panels','_panels.scss'],
-		['bootstrap/carousel','_carousel.scss'],
-		['bootstrap/popovers','_popovers.scss'],
-		['bootstrap/close','_close.scss'],
-		['bootstrap/print','_print.scss'],
-		['bootstrap/code','_code.scss'],
-		['bootstrap/progress-bars','_progress-bars.scss'],
-		['bootstrap/component-animations','_component-animations.scss'],
-		['bootstrap/responsive-embed','_responsive-embed.scss'],
-		['bootstrap/dropdowns','_dropdowns.scss'],
-		['bootstrap/responsive-utilities','_responsive-utilities.scss'],
-		['bootstrap/forms','_forms.scss'],
-		['bootstrap/scaffolding','_scaffolding.scss'],
-		['bootstrap/glyphicons','_glyphicons.scss'],
-		['bootstrap/tables','_tables.scss'],
-		['bootstrap/grid','_grid.scss'],
-		['bootstrap/theme','_theme.scss'],
-		['bootstrap/input-groups','_input-groups.scss'],
-		['bootstrap/thumbnails','_thumbnails.scss'],
-		['bootstrap/jumbotron','_jumbotron.scss'],
-		['bootstrap/tooltip','_tooltip.scss'],
-		['bootstrap/labels','_labels.scss'],
-		['bootstrap/type','_type.scss'],
-		['bootstrap/list-group','_list-group.scss'],
-		['bootstrap/utilities','_utilities.scss'],
-		['bootstrap/media','_media.scss'],
-		//['bootstrap/variables','_variables.scss'],
-		['bootstrap/mixins','_mixins.scss'],
-		['bootstrap/wells','_wells.scss'],
-		['bootstrap/modals','_modals.scss'],
-		['bootstrap/navbar','_navbar.scss'],
-		['mixins/_alerts','mixins/_alerts.scss'],
-		['mixins/_nav-vertical-align','mixins/_nav-vertical-align.scss'],
-		['mixins/_background-variant','mixins/_background-variant.scss'],
-		['mixins/_opacity','mixins/_opacity.scss'],
-		['mixins/_border-radius','mixins/_border-radius.scss'],
-		['mixins/_pagination','mixins/_pagination.scss'],
-		['mixins/_buttons','mixins/_buttons.scss'],
-		['mixins/_panels','mixins/_panels.scss'],
-		['mixins/_center-block','mixins/_center-block.scss'],
-		['mixins/_progress-bar','mixins/_progress-bar.scss'],
-		['mixins/_clearfix','mixins/_clearfix.scss'],
-		['mixins/_reset-filter','mixins/_reset-filter.scss'],
-		['mixins/_forms','mixins/_forms.scss'],
-		['mixins/_reset-text','mixins/_reset-text.scss'],
-		['mixins/_gradients','mixins/_gradients.scss'],
-		['mixins/_resize','mixins/_resize.scss'],
-		['mixins/_grid-framework','mixins/_grid-framework.scss'],
-		['mixins/_responsive-visibility','mixins/_responsive-visibility.scss'],
-		['mixins/_grid','mixins/_grid.scss'],
-		['mixins/_size','mixins/_size.scss'],
-		['mixins/_hide-text','mixins/_hide-text.scss'],
-		['mixins/_tab-focus','mixins/_tab-focus.scss'],
-		['mixins/_image','mixins/_image.scss'],
-		['mixins/_table-row','mixins/_table-row.scss'],
-		['mixins/_labels','mixins/_labels.scss'],
-		['mixins/_text-emphasis','mixins/_text-emphasis.scss'],
-		['mixins/_list-group','mixins/_list-group.scss'],
-		['mixins/_text-overflow','mixins/_text-overflow.scss'],
-		['mixins/_nav-divider','mixins/_nav-divider.scss'],
-		['mixins/_vendor-prefixes','mixins/_vendor-prefixes.scss']
-		]
+		'bootstrap.scss',
+		'_alert.scss',
+		'_images.scss',
+		'_reboot.scss',
+		'_badge.scss',
+		'_input-group.scss',
+		'_responsive-embed.scss',
+		'_breadcrumb.scss',
+		'_jumbotron.scss',
+		'_tables.scss',
+		'_button-group.scss',
+		'_list-group.scss',
+		'_tooltip.scss',
+		'_buttons.scss',
+		'_media.scss',
+		'_transitions.scss',
+		'_card.scss',
+		'_mixins.scss',
+		'_type.scss',
+		'_carousel.scss',
+		'_modal.scss',
+		'_utilities.scss',
+		'_close.scss',
+		'_nav.scss',
+		'_variables.scss',
+		'_code.scss',
+		'_navbar.scss',
+		'_custom-forms.scss',
+		'_normalize.scss',
+		'_custom.scss',
+		'_pagination.scss',
+		'_popover.scss',
+		'_dropdown.scss',
+		'_forms.scss',
+		'_print.scss',
+		'_grid.scss',
+		'_progress.scss',
+		'mixins/_alert.scss',
+		'mixins/_list-group.scss',
+		'mixins/_background-variant.scss',
+		'mixins/_lists.scss',
+		'mixins/_badge.scss',
+		'mixins/_nav-divider.scss',
+		'mixins/_border-radius.scss',
+		'mixins/_navbar-align.scss',
+		'mixins/_breakpoints.scss',
+		'mixins/_pagination.scss',
+		'mixins/_buttons.scss',
+		'mixins/_reset-text.scss',
+		'mixins/_cards.scss',
+		'mixins/_resize.scss',
+		'mixins/_clearfix.scss',
+		'mixins/_screen-reader.scss',
+		'mixins/_float.scss',
+		'mixins/_size.scss',
+		'mixins/_forms.scss',
+		'mixins/_table-row.scss',
+		'mixins/_gradients.scss',
+		'mixins/_text-emphasis.scss',
+		'mixins/_grid-framework.scss',
+		'mixins/_text-hide.scss',
+		'mixins/_grid.scss',
+		'mixins/_text-truncate.scss',
+		'mixins/_hover.scss',
+		'mixins/_transforms.scss',
+		'mixins/_image.scss',
+		'mixins/_visibility.scss',
+		'utilities/_align.scss',
+		'utilities/_display.scss',
+		'utilities/_flex.scss',
+		'utilities/_spacing.scss',
+		'utilities/_background.scss',
+		'utilities/_float.scss',
+		'utilities/_text.scss',
+		'utilities/_borders.scss',
+		'utilities/_position.scss',
+		'utilities/_sizing.scss',
+		'utilities/_visibility.scss',
+		'utilities/_clearfix.scss',
+		'utilities/_screenreaders.scss'
+	]
+		.map((f) => [f.replace(/\.scss/g,''),f])
 		.forEach(function(nameAndUrlTuple){
 			var name = nameAndUrlTuple[0];
 			var url = nameAndUrlTuple[1];
-			promises.push($.get('node_modules/bootstrap-sass/assets/stylesheets/bootstrap/' + url, function(sass){
+			promises.push($.get('node_modules/bootstrap/scss/' + url, function(sass){
 				Sass.writeFile(name,sass);
 			}));
 		});
@@ -179,18 +192,22 @@ EditorModel.prototype.setupStyleSheet = function(){
 	function getVariablesText(){
 		return $.get('variables.scss', function(res){
 			self.variablesSCSS(res);
-			self.cssSettings(createVariablesFileContents(res));
+			self.cssSettings(parseVariablesFileAndCreateArrayOfSettings(res));
 		});
 	}
 
 	function getBaseSCSS(){
-		return $.get('node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss', function(res){
+		return $.get('node_modules/bootstrap/scss/bootstrap.scss', function(res){
 			self.baseScss(res);
 		});
 	}
 
 
-	function createVariablesFileContents(variablesText){
+
+	// This processes the loaded scss one line at a time and has a primary 
+	// side-effect of updating self.allSettings
+	// 
+	function parseVariablesFileAndCreateArrayOfSettings(variablesText){
 		var lines = variablesText.split('\n');
 		// holds last section name. Updates every time new section comment parsed
 		var section = '';
@@ -200,16 +217,63 @@ EditorModel.prototype.setupStyleSheet = function(){
 		// holds last setting description. Updates every time new setting comment parsed
 		var settingDescription = '';
 
-
 		var allSettings = [];
 
-		lines.forEach(function(lineText){
+		// =====================================================
+		// variables and functions to support multi-line content
+		var previousLineContent;
+		var previousScssLineDidNotEnd = false;
+		
+		function resetMultiLineVars(){
+			previousLineContent = null;
+			previousScssLineDidNotEnd = false;
+		}
+		// =====================================================
 
-			if(lineText[0] === '/'){
+	
+		lines.forEach(function processScssFileLine(lineText){
+
+			var currentLineIsCommentLine = lineText[0] === '/';
+			var currentLineIsFirstLineOfScssVariableDeclaration = lineText[0] === '$';
+			var currentLineIslastLineOfRuleSet = lineText[lineText.length-1] === ';';
+
+			//todo: handle multiline comments
+			// this is a comment line
+			if(currentLineIsCommentLine){
 				parseCommentRow(cleanCommentLineText(lineText));
-			} else if(lineText[0] === '$'){
-				if(!section){return}// ignore untethered settings at top of file
-				parseVariableRow(lineText);
+				resetMultiLineVars();
+				return;
+			}
+
+			// this is a single line css rule-set
+			if( currentLineIsFirstLineOfScssVariableDeclaration && currentLineIslastLineOfRuleSet){
+				parseScssRuleSetAndAddToSettings(lineText);
+				resetMultiLineVars();
+				return;
+			}
+
+			// this is the beginning of a multiline css rule-set
+			if( currentLineIsFirstLineOfScssVariableDeclaration && !currentLineIslastLineOfRuleSet){
+				previousLineContent = lineText;
+				previousScssLineDidNotEnd = true;
+				return;
+			}
+
+			// this is the middle or end of a multiline css rule-set
+			if( previousScssLineDidNotEnd ) {
+
+				// we accrete all of the line text in `previousLineContent`
+				// so we can process it all together
+				// add a newline to make these identifiable later
+				previousLineContent += ( lineText + '\n');
+
+				// this is the end of a multiline css rule-set
+				if(currentLineIslastLineOfRuleSet){
+					parseScssRuleSetAndAddToSettings(previousLineContent);
+					resetMultiLineVars();
+				}
+
+				return;
 			}
 
 		});
@@ -249,16 +313,21 @@ EditorModel.prototype.setupStyleSheet = function(){
 			}
 		}
 
-		function parseVariableRow(lineText){
+		function parseScssRuleSetAndAddToSettings(lineText){
 
-			lineText = lineText.replace(/\s?!default;/,'');
 
-			var sassVar = lineText.match(/\$.*:/)[0] // get everything up to :
-				.replace(':','').trim(); //remove :
-			var val = lineText.match(/:.*/)[0] //get everything after :
-				.replace(':','') //remove :
-				.replace(/\/\/.*/,'') // remove trailing comments
+			lineText = lineText.replace(/\s?(!default)?;/,'');
+
+			var indexOfFirstColon = lineText.indexOf(':');
+
+			var sassVar = lineText.slice(0,indexOfFirstColon)
 				.trim();
+			// +1 to exclude colon
+			var val = lineText.slice(indexOfFirstColon + 1)
+				//.replace(':','') //remove :
+				.trim();
+
+
 			var controlType = parseControlTypeFromValue(val);
 			var valObs;
 
@@ -284,6 +353,9 @@ EditorModel.prototype.setupStyleSheet = function(){
 		}
 
 		function parseControlTypeFromValue(val){
+
+			if(/\n/.test(val)){return 'textarea';}
+
 			return 'text';
 		}
 
