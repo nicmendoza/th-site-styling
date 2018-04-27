@@ -16,18 +16,7 @@ ko.bindingHandlers.typeahead = {
 	};
 	var setup = {
 		name: 'scss_functions',
-		source: substringMatcher(source),
-	    matcher: function (item) {
-	      var tquery = extractor(this.query);
-	      if(!tquery) return false;
-	      return ~item.toLowerCase().indexOf(tquery.toLowerCase())
-	    },
-	    highlighter: function (item) {
-	      var query = extractor(this.query).replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
-	      return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
-	        return '<strong>' + match + '</strong>'
-	      })
-    }
+		source: substringMatcher(source)
 	}
 
 	$element
