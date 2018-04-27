@@ -4,9 +4,6 @@ function EditorModel(){
 	var self = this;
 
 	var scssFunctions = [
-		'hue',
-		'saturation',
-		'lightness',
 		'adjust',
 		'lighten',
 		'darken',
