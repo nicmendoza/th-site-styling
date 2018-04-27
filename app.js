@@ -27,7 +27,7 @@ function EditorModel(){
 
 	if(!variablesSCSS || !self.assetsLoaded()) return;
 		self.err(undefined);
-		Sass.writeFile('_custom',variablesSCSS, function(writeRes){
+		Sass.writeFile('_variables',variablesSCSS, function(writeRes){
 			var baseScss= self.baseScss();
 			Sass.compile(baseScss,function(sassRes){
 				if(sassRes.message){
@@ -97,7 +97,8 @@ EditorModel.prototype.setupStyleSheet = function(){
 		'_reboot.scss',
 		'_badge.scss',
 		'_input-group.scss',
-		'_responsive-embed.scss',
+		'_functions.scss',
+		//'_responsive-embed.scss',
 		'_breadcrumb.scss',
 		'_jumbotron.scss',
 		'_tables.scss',
@@ -119,13 +120,14 @@ EditorModel.prototype.setupStyleSheet = function(){
 		'_code.scss',
 		'_navbar.scss',
 		'_custom-forms.scss',
-		'_normalize.scss',
-		'_custom.scss',
+		//'_normalize.scss',
+		//'_custom.scss',
 		'_pagination.scss',
 		'_popover.scss',
 		'_dropdown.scss',
 		'_forms.scss',
 		'_print.scss',
+		'_root.scss',
 		'_grid.scss',
 		'_progress.scss',
 		'mixins/_alert.scss',
@@ -133,6 +135,8 @@ EditorModel.prototype.setupStyleSheet = function(){
 		'mixins/_background-variant.scss',
 		'mixins/_lists.scss',
 		'mixins/_badge.scss',
+		'mixins/_box-shadow.scss',
+		'mixins/_caret.scss',
 		'mixins/_nav-divider.scss',
 		'mixins/_border-radius.scss',
 		'mixins/_navbar-align.scss',
@@ -140,7 +144,7 @@ EditorModel.prototype.setupStyleSheet = function(){
 		'mixins/_pagination.scss',
 		'mixins/_buttons.scss',
 		'mixins/_reset-text.scss',
-		'mixins/_cards.scss',
+		//'mixins/_cards.scss',
 		'mixins/_resize.scss',
 		'mixins/_clearfix.scss',
 		'mixins/_screen-reader.scss',
@@ -155,11 +159,13 @@ EditorModel.prototype.setupStyleSheet = function(){
 		'mixins/_grid.scss',
 		'mixins/_text-truncate.scss',
 		'mixins/_hover.scss',
-		'mixins/_transforms.scss',
+		//'mixins/_transforms.scss',
 		'mixins/_image.scss',
+		'mixins/_transition.scss',
 		'mixins/_visibility.scss',
 		'utilities/_align.scss',
 		'utilities/_display.scss',
+		'utilities/_embed.scss',
 		'utilities/_flex.scss',
 		'utilities/_spacing.scss',
 		'utilities/_background.scss',
@@ -285,6 +291,7 @@ EditorModel.prototype.setupStyleSheet = function(){
 
 		function parseCommentRow(lineText){
 			
+
 			//ignore empty comments
 			if(lineText.length === 0){
 				return;
@@ -314,7 +321,6 @@ EditorModel.prototype.setupStyleSheet = function(){
 		}
 
 		function parseScssRuleSetAndAddToSettings(lineText){
-
 
 			lineText = lineText.replace(/\s?(!default)?;/,'');
 

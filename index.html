@@ -10,7 +10,7 @@
 
 
 	</head>
-	<body style="display: none" data-bind="style: { display: css().length ? 'flex' : 'none' } ">
+	<body style="display: none" data-bind="style: { display: ( err() || css().length ) ? 'flex' : 'none' } ">
 
 
 		<style data-bind="html: css"></style>
@@ -26,6 +26,8 @@
 				    </blockquote>
 				  </div>
 				</div>
+
+				<textarea data-bind="text: css"></textarea>
 
 				
 				<div data-bind="foreach: Object.keys(cssSettingsBySection())">
