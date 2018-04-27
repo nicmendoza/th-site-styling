@@ -2,7 +2,7 @@
 
 Get the repo and its sass.js submodule:
 ```
-git clone https://github.com/nicmendoza/th-site-styling --recursive
+git clone https://github.com/propelmarketing/th-site-styling --recursive
 ```
 
 Install project dependencies by running the following in the root of the project:
