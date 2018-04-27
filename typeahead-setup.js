@@ -1,5 +1,4 @@
 // quick and dirty typahead knockoug binding
-// multi-autocomplete from: https://stackoverflow.com/a/12663455/3337822
 
 const MINLENGTH = 1;
 
