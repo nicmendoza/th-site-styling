@@ -3,6 +3,21 @@ ko.punches.enableAll();
 function EditorModel(){
 	var self = this;
 
+	var scssFunctions = [
+		'hue',
+		'saturation',
+		'lightness',
+		'adjust',
+		'lighten',
+		'darken',
+		'saturate',
+		'desaturate',
+		'grayscale',
+		'complement',
+		'invert',
+		'rgba'
+	];
+
 	self.css = ko.observable('');
 
 	self.cssSettings = ko.observableArray();
@@ -17,6 +32,12 @@ function EditorModel(){
 		return self.cssSettings().map(function(cssSet){
 			return `${cssSet.sassVariableName}: ${cssSet.value()} ;`;
 		}).join('\n');
+	});
+
+	self.scssTypeaheads = ko.pureComputed(function(){
+		return scssFunctions.concat(self.cssSettings().map(function(cssSet){
+			return cssSet.sassVariableName;
+		}));
 	});
 
 	self.err = ko.observable();
