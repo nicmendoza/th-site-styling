@@ -37,7 +37,12 @@ function EditorModel(){
 		}));
 	});
 
-	self.err = ko.observable();
+	self.err = ko.observable('');
+
+	self.niceErr = ko.pureComputed(function(){
+		return ( self.err() || '') 
+			.replace(/on line.*/gi,'')
+	});
 
 	ko.computed(function(variablesSCSS){
 
