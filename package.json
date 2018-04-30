@@ -13,6 +13,7 @@
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-sass": "^3.3.7",
     "connect": "^3.6.5",
+    "jquery-typeahead": "^2.10.4",
     "serve-static": "^1.13.1",
     "typeahead.js": "^0.11.1"
   }

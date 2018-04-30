@@ -162,7 +162,6 @@ EditorModel.prototype.setupStyleSheet = function(){
 		'mixins/_caret.scss',
 		'mixins/_nav-divider.scss',
 		'mixins/_border-radius.scss',
-		'mixins/_navbar-align.scss',
 		'mixins/_breakpoints.scss',
 		'mixins/_pagination.scss',
 		'mixins/_buttons.scss',
