@@ -398,6 +398,8 @@ EditorModel.prototype.setupStyleSheet = function(){
 
 			if(/\n/.test(val)){return 'textarea';}
 
+			if(/#/.test(val)){return 'color';}
+
 			return 'text';
 		}
 

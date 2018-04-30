@@ -43,8 +43,13 @@
 								<tr>
 									<td>{{name}}</td>
 								    <td>
+
 								    	{{#if: controlType === 'text'}}
 								    	<input type="text" class="form-control"  data-bind="value: value, typeahead: $root.scssTypeaheads">
+								    	{{/if}}
+
+								    	{{#if: controlType === 'color'}}
+								    	<input type="text" class="form-control"  data-bind="value: value, typeahead: $root.scssTypeaheads, style: { borderColor: value }">
 								    	{{/if}}
 
 								    	{{#if: controlType === 'textarea'}}
@@ -79,6 +84,10 @@
 												    <td>
 												    	{{#if: controlType === 'text'}}
 												    	<input type="text" class="form-control"  data-bind="value: value, typeahead: $root.scssTypeaheads">
+												    	{{/if}}
+
+												    	{{#if: controlType === 'color'}}
+												    	<input type="text" class="form-control"  data-bind="value: value, typeahead: $root.scssTypeaheads, style: { borderColor: value }">
 												    	{{/if}}
 
 												    	{{#if: controlType === 'textarea'}}
