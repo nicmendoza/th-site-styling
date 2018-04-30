@@ -17,7 +17,7 @@ body {display:flex; overflow-x: hidden;}
   padding-left: 0;
 } 
 
-.style-container {
+.style-container, .content-preview {
 	max-height: 100vh;
 	overflow: scroll;
 }
