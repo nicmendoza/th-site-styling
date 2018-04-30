@@ -41,7 +41,9 @@ function EditorModel(){
 
 	self.niceErr = ko.pureComputed(function(){
 		return ( self.err() || '') 
-			.replace(/on line.*/gi,'')
+			// this is kind of annoying for development, but would make
+			// the error display slightly nicer for designer-users
+			//.replace(/on line.*/gi,''); 
 	});
 
 	ko.computed(function(variablesSCSS){
@@ -198,7 +200,8 @@ EditorModel.prototype.setupStyleSheet = function(){
 		'utilities/_sizing.scss',
 		'utilities/_visibility.scss',
 		'utilities/_clearfix.scss',
-		'utilities/_screenreaders.scss'
+		'utilities/_screenreaders.scss',
+		'utilities/_shadows.scss'
 	]
 		.map((f) => [f.replace(/\.scss/g,''),f])
 		.forEach(function(nameAndUrlTuple){
