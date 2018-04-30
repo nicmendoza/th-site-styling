@@ -21,7 +21,7 @@ body {display:flex; overflow-x: hidden;}
 }
 
 .style-container {
-    height: 90vh;
+    height: 70vh;
 }
 
 .content-preview, .style-container {
