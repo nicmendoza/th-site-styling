@@ -31,6 +31,17 @@ function EditorModel(){
 		}).join('\n');
 	});
 
+	self.scssSearchQuery = ko.observable().extend({throttle: 500});
+
+	self.scssSettingsFiltered = ko.pureComputed(()=>{
+		let query = self.scssSearchQuery();
+		return self.cssSettings().filter(function(setting){
+			return ['name', 'sassVariableName', 'section', 'value'].some((key) => {
+				return ko.unwrap(setting[key]).search(query) > -1;
+			})
+		})
+	});
+
 	self.scssTypeaheads = ko.pureComputed(function(){
 		return scssFunctions.concat(self.cssSettings().map(function(cssSet){
 			return cssSet.sassVariableName;
@@ -41,7 +52,9 @@ function EditorModel(){
 
 	self.niceErr = ko.pureComputed(function(){
 		return ( self.err() || '') 
-			.replace(/on line.*/gi,'')
+			// this is kind of annoying for development, but would make
+			// the error display slightly nicer for designer-users
+			//.replace(/on line.*/gi,''); 
 	});
 
 	ko.computed(function(variablesSCSS){
@@ -198,7 +211,8 @@ EditorModel.prototype.setupStyleSheet = function(){
 		'utilities/_sizing.scss',
 		'utilities/_visibility.scss',
 		'utilities/_clearfix.scss',
-		'utilities/_screenreaders.scss'
+		'utilities/_screenreaders.scss',
+		'utilities/_shadows.scss'
 	]
 		.map((f) => [f.replace(/\.scss/g,''),f])
 		.forEach(function(nameAndUrlTuple){
@@ -383,6 +397,8 @@ EditorModel.prototype.setupStyleSheet = function(){
 		function parseControlTypeFromValue(val){
 
 			if(/\n/.test(val)){return 'textarea';}
+
+			if(/#/.test(val)){return 'color';}
 
 			return 'text';
 		}

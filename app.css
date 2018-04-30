@@ -3,7 +3,6 @@
 	background-color: gray;
 	display: flex;
 	flex-direction: column;
-	height: 100vh;
 }
 body {display:flex; overflow-x: hidden;}
 
@@ -16,11 +15,6 @@ body {display:flex; overflow-x: hidden;}
   padding-right: 0;
   padding-left: 0;
 } 
-
-.style-container {
-	max-height: 100vh;
-	overflow: scroll;
-}
 
 /* typeahead */
 
