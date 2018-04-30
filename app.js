@@ -36,8 +36,8 @@ function EditorModel(){
 	self.scssSettingsFiltered = ko.pureComputed(()=>{
 		let query = self.scssSearchQuery();
 		return self.cssSettings().filter(function(setting){
-			return ['name', 'sassVariableName', 'section'].some((key) => {
-				return setting[key].search(query) > -1;
+			return ['name', 'sassVariableName', 'section', 'value'].some((key) => {
+				return ko.unwrap(setting[key]).search(query) > -1;
 			})
 		})
 	});
