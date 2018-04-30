@@ -16,6 +16,18 @@ body {display:flex; overflow-x: hidden;}
   padding-left: 0;
 } 
 
+.sidebar, .content-preview {
+    height: 100vh;
+}
+
+.style-container {
+    height: 90vh;
+}
+
+.content-preview, .style-container {
+    overflow-y: scroll;
+}
+
 /* typeahead */
 
 .tt-input, /* UPDATE: newer versions use tt-input instead of tt-input */
@@ -64,3 +76,5 @@ body {display:flex; overflow-x: hidden;}
 .tt-suggestion p {
     margin: 0;
 }
+
+.twitter-typeahead{ float:left; width:100%}
