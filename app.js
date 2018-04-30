@@ -31,6 +31,17 @@ function EditorModel(){
 		}).join('\n');
 	});
 
+	self.scssSearchQuery = ko.observable().extend({throttle: 500});
+
+	self.scssSettingsFiltered = ko.pureComputed(()=>{
+		let query = self.scssSearchQuery();
+		return self.cssSettings().filter(function(setting){
+			return ['name', 'sassVariableName', 'section'].some((key) => {
+				return setting[key].search(query) > -1;
+			})
+		})
+	});
+
 	self.scssTypeaheads = ko.pureComputed(function(){
 		return scssFunctions.concat(self.cssSettings().map(function(cssSet){
 			return cssSet.sassVariableName;

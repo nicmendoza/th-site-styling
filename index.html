@@ -27,45 +27,78 @@
 				  </div>
 				</div>
 
-				<div class="card">
-					<textarea class="text-white bg-dark" data-bind="text: css"></textarea>
+				<input type="text" class="form-control mt-1 mb-1" data-bind="textInput: scssSearchQuery" placeholder="Search..." autocomplete="off">
+
+				<div class="style-container">
+					<!-- ko if: scssSearchQuery -->
+
+						<!-- ko if: scssSettingsFiltered().length === 0 -->
+							<div class="alert alert-warning mb-0" role="alert">
+							  <strong>Sorry</strong>. No results found.
+							</div>
+						<!-- /ko -->
+
+						<table class="table bg-white">
+				    		<tbody data-bind="foreach: scssSettingsFiltered">
+								<tr>
+									<td>{{name}}</td>
+								    <td>
+								    	{{#if: controlType === 'text'}}
+								    	<input type="text" class="form-control"  data-bind="value: value, typeahead: $root.scssTypeaheads">
+								    	{{/if}}
+
+								    	{{#if: controlType === 'textarea'}}
+								    	<textarea class="form-control" data-bind="value: value"></textarea>
+								    	{{/if}}
+
+								    </td>
+							 	</tr>
+						 	</tbody>
+						</table>
+
+					<!-- /ko -->
+					<!-- ko ifnot: scssSearchQuery -->
+						<div data-bind="foreach: Object.keys(cssSettingsBySection())">
+							<div class="card">
+							    <h5 class="card-header" role="button" data-toggle="collapse" data-target="#collapse-{{$data.replace(/\s/g,'')}}" aria-expanded="false">
+							    	<a class="" >
+										{{ $data }}
+									</a>
+
+							    </h5>
+								  <div class="card-block collapse" data-bind="
+									with: $root.cssSettingsBySection()[$data],
+									attr: {
+										'id' : 'collapse-' + $data.replace(/\s/g,'')
+									}
+									">
+								    	<table class="table">
+								    		<tbody data-bind="foreach: settings">
+												<tr>
+													<td>{{name}}</td>
+												    <td>
+												    	{{#if: controlType === 'text'}}
+												    	<input type="text" class="form-control"  data-bind="value: value, typeahead: $root.scssTypeaheads">
+												    	{{/if}}
+
+												    	{{#if: controlType === 'textarea'}}
+												    	<textarea class="form-control" data-bind="value: value"></textarea>
+												    	{{/if}}
+
+												    </td>
+											 	</tr>
+										 	</tbody>
+										</table>
+
+								  </div>
+							</div>
+						</div>
+					<!-- /ko -->
 				</div>
 
-				
-				<div class="style-container" data-bind="foreach: Object.keys(cssSettingsBySection())">
-					<div class="card">
-					    <h5 class="card-header" role="button" data-toggle="collapse" data-target="#collapse-{{$data.replace(/\s/g,'')}}" aria-expanded="false">
-					    	<a class="" >
-								{{ $data }}
-							</a>
-
-					    </h5>
-						  <div class="card-block collapse" data-bind="
-							with: $root.cssSettingsBySection()[$data],
-							attr: {
-								'id' : 'collapse-' + $data.replace(/\s/g,'')
-							}
-							">
-						    	<table class="table">
-						    		<tbody data-bind="foreach: settings">
-										<tr>
-											<td>{{name}}</td>
-										    <td>
-										    	{{#if: controlType === 'text'}}
-										    	<input type="text" class="form-control"  data-bind="value: value, typeahead: $root.scssTypeaheads">
-										    	{{/if}}
-
-										    	{{#if: controlType === 'textarea'}}
-										    	<textarea class="form-control" data-bind="value: value"></textarea>
-										    	{{/if}}
-
-										    </td>
-									 	</tr>
-								 	</tbody>
-								</table>
-
-						  </div>
-					</div>
+				<div class="card card-outline-info mt-2 text-center">
+					<h5 class="h5">Rendered CSS</h5>
+					<textarea class="text-white bg-dark" data-bind="text: css"></textarea>
 				</div>
 
 			</div>
