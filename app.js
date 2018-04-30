@@ -19,6 +19,10 @@ function EditorModel(){
 
 	self.cssSettings = ko.observableArray();
 
+	self.userSettableCssSettings = ko.pureComputed(()=>{
+		return self.cssSettings().filter((s)=>{return !s.isBlackListed;});
+	});
+
 	self.sectionDescriptions = ko.observable();
 	self.assetsLoaded = ko.observable(false);
 
@@ -35,7 +39,7 @@ function EditorModel(){
 
 	self.scssSettingsFiltered = ko.pureComputed(()=>{
 		let query = self.scssSearchQuery();
-		return self.cssSettings().filter(function(setting){
+		return self.userSettableCssSettings().filter(function(setting){
 			return ['name', 'sassVariableName', 'section', 'value'].some((key) => {
 				return ko.unwrap(setting[key]).search(query) > -1;
 			})
@@ -80,7 +84,7 @@ function EditorModel(){
 
 
 	self.cssSettingsBySection = ko.pureComputed(function(){
-		return self.cssSettings().reduce(function(acc,curr){
+		return self.userSettableCssSettings().reduce(function(acc,curr){
 			var sectionName = curr.section;
 			if(!acc[sectionName]){
 				acc[sectionName] = {
@@ -253,6 +257,8 @@ EditorModel.prototype.setupStyleSheet = function(){
 		var lines = variablesText.split('\n');
 		// holds last section name. Updates every time new section comment parsed
 		var section = '';
+		// holds onto last isBlackListed setting
+		var isBlackListed;
 		// holds all section descriptions
 		var sectionDescriptions = {};
 
@@ -354,6 +360,12 @@ EditorModel.prototype.setupStyleSheet = function(){
 				settingDescription = lineText;
 				return;
 			}
+
+			// process new upcoming blacklisted val
+			if(lineText[0] === 'X'){
+				isBlackListed = true;
+				return;
+			}
 		}
 
 		function parseScssRuleSetAndAddToSettings(lineText){
@@ -378,7 +390,8 @@ EditorModel.prototype.setupStyleSheet = function(){
 				name: settingDescription || sassVar,
 				sassVariableName: sassVar,
 				value: valObs = ko.observable(val),
-				controlType: controlType
+				controlType: controlType,
+				isBlackListed: isBlackListed
 			});
 
 			// cause these internal settings changes to trigger css updates
@@ -388,6 +401,7 @@ EditorModel.prototype.setupStyleSheet = function(){
 
 			// setting descriptions only ever used once
 			settingDescription = '';
+			isBlackListed = false;
 		}
 
 		function cleanCommentLineText(lineText){
