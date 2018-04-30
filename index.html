@@ -27,7 +27,15 @@
 				  </div>
 				</div>
 
-				<input type="search" class="form-control mt-1 mb-1" data-bind="textInput: scssSearchQuery" placeholder="Search..." autocomplete="off">
+
+				<div class="input-group mt-1 mb-1">
+					<input type="search" class="form-control" data-bind="textInput: scssSearchQuery" placeholder="Search..." autocomplete="off">
+						<!-- ko if: scssSearchQuery() -->
+						  <div class="input-group-append">
+						    <button class="btn btn-warning" type="button" data-bind="click: function(){ scssSearchQuery('') }">Clear</button>
+						  </div>
+						<!-- /ko -->
+				</div>
 
 				<div class="style-container">
 					<!-- ko if: scssSearchQuery -->
