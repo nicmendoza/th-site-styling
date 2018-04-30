@@ -5,25 +5,34 @@
 
 
 //
-// == Color system
+// == Colors
 //
 
 // stylelint-disable
 // ** white
 $white:    #fff !default;
+// X
 $gray-100: #f8f9fa !default;
+// X
 $gray-200: #e9ecef !default;
+// X
 $gray-300: #dee2e6 !default;
+// X
 $gray-400: #ced4da !default;
+// X
 $gray-500: #adb5bd !default;
+// X
 $gray-600: #6c757d !default;
+// X
 $gray-700: #495057 !default;
+// X
 $gray-800: #343a40 !default;
+// X
 $gray-900: #212529 !default;
 $black:    #000 !default;
 
-$grays: () !default;
-$grays: map-merge((
+// X
+$grays: (
   "100": $gray-100,
   "200": $gray-200,
   "300": $gray-300,
@@ -33,21 +42,31 @@ $grays: map-merge((
   "700": $gray-700,
   "800": $gray-800,
   "900": $gray-900
-), $grays);
+);
 
+// X
 $blue:    #007bff !default;
+// X
 $indigo:  #6610f2 !default;
+// X
 $purple:  #6f42c1 !default;
+// X
 $pink:    #e83e8c !default;
+// X
 $red:     #dc3545 !default;
+// X
 $orange:  #fd7e14 !default;
+// X
 $yellow:  #ffc107 !default;
+// X
 $green:   #28a745 !default;
+// X
 $teal:    #20c997 !default;
+// X
 $cyan:    #17a2b8 !default;
 
-$colors: () !default;
-$colors: map-merge((
+// X
+$colors: (
   "blue":       $blue,
   "indigo":     $indigo,
   "purple":     $purple,
@@ -61,19 +80,19 @@ $colors: map-merge((
   "white":      $white,
   "gray":       $gray-600,
   "gray-dark":  $gray-800
-), $colors);
+);
 
-$primary:       $blue !default;
-$secondary:     $gray-600 !default;
-$success:       $green !default;
-$info:          $cyan !default;
-$warning:       $yellow !default;
-$danger:        $red !default;
-$light:         $gray-100 !default;
-$dark:          $gray-800 !default;
+$primary:       #007bff;
+$secondary:     #6c757d;
+$success:       #28a745;
+$info:          #17a2b8;
+$warning:       #ffc107;
+$danger:        #dc3545;
+$light:         #f8f9fa;
+$dark:          #343a40;
 
-$theme-colors: () !default;
-$theme-colors: map-merge((
+// X
+$theme-colors: (
   "primary":    $primary,
   "secondary":  $secondary,
   "success":    $success,
@@ -82,17 +101,23 @@ $theme-colors: map-merge((
   "danger":     $danger,
   "light":      $light,
   "dark":       $dark
-), $theme-colors);
+);
 // stylelint-enable
 
 // Set a specific jump point for requesting color jumps
+// X
 $theme-color-interval:      8% !default;
 
 // The yiq lightness value that determines when the lightness of color changes from "dark" to "light". Acceptable values are between 0 and 255.
+
+// X
 $yiq-contrasted-threshold:  150 !default;
 
 // Customize the light and dark text colors for use in our YIQ color contrast function.
+
+// X
 $yiq-text-dark:             $gray-900 !default;
+// X
 $yiq-text-light:            $white !default;
 
 // == Options
@@ -117,25 +142,25 @@ $enable-print-styles:       true !default;
 
 // stylelint-disable
 $spacer: 1rem !default;
-$spacers: () !default;
-$spacers: map-merge((
+// X
+$spacers: (
   0: 0,
   1: ($spacer * .25),
   2: ($spacer * .5),
   3: $spacer,
   4: ($spacer * 1.5),
   5: ($spacer * 3)
-), $spacers);
+);
 
 // This variable affects the `.h-*` and `.w-*` classes.
-$sizes: () !default;
-$sizes: map-merge((
+// X
+$sizes: (
   25: 25%,
   50: 50%,
   75: 75%,
   100: 100%,
   auto: auto
-), $sizes);
+);
 // stylelint-enable
 
 // == Body
