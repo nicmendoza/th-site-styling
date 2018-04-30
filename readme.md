@@ -18,4 +18,5 @@ Run server in the root directory of the project
 node server
 ```
 
-Navigate to localhost:7000 in your browser
+Navigate to localhost:7000 in your browser to load the "kitchen sink" test page
+Navigate to localhost:7000/#chalk-it-up to load the "Chalk it Up" test page
