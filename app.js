@@ -16,6 +16,7 @@ function EditorModel(){
 	];
 
 	self.css = ko.observable('');
+	self.customScss = ko.observable('');
 
 	self.cssSettings = ko.observableArray();
 
@@ -32,7 +33,7 @@ function EditorModel(){
 	self.scssVariablesGenerated = ko.pureComputed(function(){
 		return self.cssSettings().map(function(cssSet){
 			return `${cssSet.sassVariableName}: ${cssSet.value()} ;`;
-		}).join('\n');
+		}).join('\n') + self.customScss();
 	});
 
 	self.scssSearchQuery = ko.observable().extend({throttle: 500});

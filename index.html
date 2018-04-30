@@ -73,10 +73,19 @@
 							</div>
 						</div>
 					<!-- /ko -->
+						<div class="card">
+							<h5 class="card-header" role="button" data-toggle="collapse" data-target="#collapse-custom-scss" aria-expanded="false">
+								<a>Custom SCSS</a>
+							</h5>
+							<div class="card-block collapse" id="collapse-custom-scss">
+								<textarea class="form-control text-white bg-dark" rows="5" data-bind="value: customScss"></textarea>
+								<button class="btn btn-secondary float-right mr-1 mt-1 mb-1">apply</button>
+							</div>
+						</div>
 				</div>
 
-				<div class="card card-outline-info mt-2 text-center">
-					<h5 class="h5">Rendered CSS</h5>
+				<div class="card card-outline-info mt-2">
+					<h5 class="h5">Final CSS</h5>
 					<textarea class="text-white bg-dark" data-bind="text: css"></textarea>
 				</div>
 
@@ -501,10 +510,14 @@
 			            <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
 			          </div><!-- /.blog-post -->
 
-			          <nav class="blog-pagination">
-			            <a class="btn btn-outline-primary" href="#">Older</a>
-			            <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
-			          </nav>
+			            <ul class="pagination justify-center">
+						    <li class="page-item">
+						      <a class="page-link" href="#" tabindex="-1">Older</a>
+						    </li>
+						    <li class="page-item disabled">
+						      <a class="page-link" href="#">Newer</a>
+						    </li>
+					  </ul>
 
 			        </div><!-- /.blog-main -->
 
