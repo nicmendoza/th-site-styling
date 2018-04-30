@@ -18,6 +18,8 @@ function EditorModel(){
 	self.css = ko.observable('');
 	self.customScss = ko.observable('');
 
+	self.previewContent = ko.observable();
+
 	self.cssSettings = ko.observableArray();
 
 	self.userSettableCssSettings = ko.pureComputed(()=>{
@@ -114,6 +116,7 @@ function EditorModel(){
 	
 
 	self.setupStyleSheet();
+	self.setupPreview(document.location.hash.replace('#','') || 'kitchen-sink');
 
 }
 
@@ -123,6 +126,14 @@ EditorModel.prototype.updateCSS = function(){
 
 
 };
+
+EditorModel.prototype.setupPreview = function(file){
+	var self = this;
+	return $.get(`/html/${file}.html`)
+		.then((res)=>{
+			self.previewContent(res);
+		})
+}
 
 EditorModel.prototype.setupStyleSheet = function(){
 
