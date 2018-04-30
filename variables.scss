@@ -326,7 +326,7 @@ $table-striped-order:         odd !default;
 
 $table-caption-color:         $text-muted !default;
 
-// == Buttons + Forms
+// == Buttons and form defaults
 //
 // Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
 
@@ -378,7 +378,7 @@ $btn-link-disabled-color:     $gray-600 !default;
 
 $btn-block-spacing-y:         .5rem !default;
 
-// == Allows for customizing button radius independently from global border radius
+// Allows for customizing button radius independently from global border radius
 $btn-border-radius:           $border-radius !default;
 $btn-border-radius-lg:        $border-radius-lg !default;
 $btn-border-radius-sm:        $border-radius-sm !default;
