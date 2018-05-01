@@ -16,6 +16,9 @@ function EditorModel(){
 	];
 
 	self.css = ko.observable('');
+	self.customScss = ko.observable('');
+
+	self.previewContent = ko.observable();
 
 	self.cssSettings = ko.observableArray();
 
@@ -32,7 +35,7 @@ function EditorModel(){
 	self.scssVariablesGenerated = ko.pureComputed(function(){
 		return self.cssSettings().map(function(cssSet){
 			return `${cssSet.sassVariableName}: ${cssSet.value()} ;`;
-		}).join('\n');
+		}).join('\n') + self.customScss();
 	});
 
 	self.scssSearchQuery = ko.observable().extend({throttle: 500});
@@ -113,6 +116,7 @@ function EditorModel(){
 	
 
 	self.setupStyleSheet();
+	self.setupPreview(document.location.hash.replace('#','') || 'kitchen-sink');
 
 }
 
@@ -122,6 +126,14 @@ EditorModel.prototype.updateCSS = function(){
 
 
 };
+
+EditorModel.prototype.setupPreview = function(file){
+	var self = this;
+	return $.get(`/html/${file}.html`)
+		.then((res)=>{
+			self.previewContent(res);
+		})
+}
 
 EditorModel.prototype.setupStyleSheet = function(){
 
