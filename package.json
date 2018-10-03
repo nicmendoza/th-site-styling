@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bootstrap": "^4.1.0",
+    "bootstrap": "~4.1.2",
     "bootstrap-sass": "^3.3.7",
     "connect": "^3.6.5",
     "jquery-typeahead": "^2.10.4",
